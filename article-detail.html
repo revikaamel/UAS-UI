@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detail Artikel - Herbal Bloom</title>
+    <link rel="stylesheet" href="css/main.css">
+    <!-- Font Awesome (sama dengan index.html) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="site-header">
+        <div class="container">
+            <a href="index.html" class="logo">HerbaBloom</a>
+            <button class="hamburger" aria-label="Buka menu">☰</button>
+            <nav class="nav">
+                <a href="index.html">Beranda</a>
+                <a href="products.html">Produk</a>
+                <a href="archive.html">Artikel</a>
+                <a href="cart.html">Keranjang</a>
+                <a href="history.html">Riwayat</a>
+                <a href="#" id="loginBtn" title="Login"><i class="fas fa-sign-in-alt"></i></a>
+            </nav>
+        </div>
+        <nav class="sidebar">
+            <div class="nav">
+                <a href="index.html">Beranda</a>
+                <a href="products.html">Produk</a>
+                <a href="archive.html">Artikel</a>
+                <a href="cart.html">Keranjang</a>
+                <a href="history.html">Riwayat</a>
+                <a href="#" id="sidebarLoginBtn" title="Login"><i class="fas fa-sign-in-alt"></i></a>
+            </div>
+        </nav>
+        <div class="overlay"></div>
+    </header>
+
+    <!-- Article Detail Section -->
+    <div class="container">
+        <div id="article" class="article-card">
+            <h1 id="article-title">Memuat...</h1>
+            <p id="article-date"></p>
+            <img id="article-image" class="article-image" alt="Gambar Artikel">
+            <div id="article-content" class="article-content"></div>
+        </div>
+
+        <!-- Back Button -->
+        <div class="back-button">
+            <a href="archive.html">Kembali ke Arsip Artikel</a>
+        </div>
+    </div>
+
+    <!-- Popup Login -->
+    <div id="loginPopup" class="popup hidden">
+        <div class="popup-overlay"></div>
+        <div class="popup-content">
+            <span id="closePopup" class="close-btn">×</span>
+            <h2>Login</h2>
+            <form>
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required>
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+                <button type="submit" class="btn-login">Masuk</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="container">
+            <p>© 2025 HerbaBloom. Semua hak cipta dilindungi.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Function to get slug from URL
+        function getSlugFromURL() {
+            const params = new URLSearchParams(window.location.search);
+            return params.get("slug");
+        }
+
+        // Function to get article data
+        function getArticleData(slug) {
+            const articles = {
+                "manfaat-bunga-rosella": {
+                    "title": "10 Manfaat Bunga Rosella untuk Kesehatan yang Jarang Diketahui",
+                    "date": "24 April 2025",
+                    "image": "images/ad-rosella.png",
+                    "content": "<p>Bunga rosella (Hibiscus sabdariffa)...</p>" +
+                    "<ul>" +
+                    "<li><strong>Menurunkan tekanan darah:</strong> Teh bunga rosella dapat membantu menurunkan tekanan darah tinggi.</li>" +
+                    "<li><strong>Menurunkan kolesterol:</strong> Bunga rosella bisa membantu menurunkan kadar kolesterol dalam tubuh.</li>" +
+                    "<li><strong>Mendukung penurunan berat badan:</strong> Ekstrak rosella dapat membantu mencegah obesitas.</li>" +
+                    "<li><strong>Melawan bakteri:</strong> Rosella memiliki sifat antibakteri yang efektif melawan mikroorganisme penyebab penyakit.</li>" +
+                    "<li><strong>Menjaga kesehatan hati:</strong> Rosella dapat membantu memperbaiki kondisi hati berlemak.</li>" +
+                    "<li><strong>Mencegah kanker:</strong> Kandungan polifenol dalam rosella dapat membantu mencegah penyebaran sel kanker.</li>" +
+                    "<li><strong>Mendukung kesehatan pencernaan:</strong> Rosella membantu memperlancar pencernaan dan mencegah sembelit.</li>" +
+                    "<li><strong>Meningkatkan kekebalan tubuh:</strong> Kaya akan vitamin C, rosella meningkatkan daya tahan tubuh.</li>" +
+                    "<li><strong>Menjaga kesehatan mental:</strong> Kandungan flavonoid dalam rosella dapat mengurangi kecemasan dan stres.</li>" +
+                    "<li><strong>Menjaga kesehatan kulit:</strong> Rosella membantu mengurangi peradangan dan meningkatkan kecerahan kulit.</li>" +
+                    "</ul>" +
+                    "<p>Konsumsi bunga rosella secara rutin dapat memberikan banyak manfaat, namun sebaiknya konsultasikan dengan dokter jika ada keluhan setelah mengonsumsinya.</p>"
+                },
+                "manfaat-teh-chamomile": {
+                    "title": "Pentingnya Manfaat Teh Chamomile",
+                    "date": "22 April 2025",
+                    "image": "images/ad-chamomile.png",
+                    "content": "<p>Chamomile banyak digunakan...</p>" +
+                    "<ul>" +
+                    "<li><b>Menyembuhkan Alergi</b>: Mengurangi gejala alergi seperti gatal dan bersin.</li>" +
+                    "<li><b>Meredakan Nyeri Menstruasi</b>: Mengurangi kram dan ketidaknyamanan saat menstruasi.</li>" +
+                    "<li><b>Membantu Tidur</b>: Memperbaiki kualitas tidur dan merelaksasi tubuh.</li>" +
+                    "<li><b>Meningkatkan Kekebalan Tubuh</b>: Memperkuat sistem imun dengan antioksidan.</li>" +
+                    "<li><b>Perawatan Kulit</b>: Mengatasi iritasi dan eksim.</li>" +
+                    "<li><b>Menurunkan Gula Darah</b>: Membantu penderita diabetes tipe 2.</li>" +
+                    "<li><b>Meredakan Gejala Flu dan Pilek</b>: Mengurangi hidung tersumbat dan sakit tenggorokan.</li>" +
+                    "<li><b>Mengatasi Peradangan</b>: Membantu mengurangi peradangan dalam tubuh.</li>" +
+                    "<li><b>Menghambat Pertumbuhan Sel Kanker</b>: Mengandung senyawa anti-kanker.</li>" +
+                    "<li><b>Mengatasi Masalah Pencernaan</b>: Membantu meredakan gangguan pencernaan.</li>" +
+                    "<li><b>Menjaga Kesehatan Jantung</b>: Melindungi jantung dari kerusakan.</li>" +
+                    "<li><b>Mengatasi Osteoporosis</b>: Membantu penyerapan kalsium untuk tulang.</li>" +
+                    "<li><b>Mengurangi Stres dan Cemas</b>: Menenangkan sistem saraf.</li>" +
+                    "<li><b>Bantu Turunkan Berat Badan</b>: Mengurangi stres yang berhubungan dengan makan berlebihan.</li>" +
+                    "<li><b>Memperkuat Rambut</b>: Mengurangi ketombe dan kerontokan rambut.</li>" +
+                    "</ul>"
+                },
+                "manfaat-bunga-telang": {
+                    "title": "Jarang Diketahui, Ini 7 Manfaat Bunga Telang untuk Kesehatan",
+                    "date": "09 Januari 2025",
+                    "image": "images/ad-telang.png",
+                    "content": "<p>Bunga telang (Clitoria ternatea)...</p>" +
+                    "<ul>" +
+                    "<li><strong>Meringankan Gejala Depresi:</strong> Asam palmitat bersifat antidepresan alami.</li>" +
+                    "<li><strong>Antioksidan Kuat:</strong> Antosianin & flavonoid melindungi sel dari kerusakan.</li>" +
+                    "<li><strong>Mempercepat Penyembuhan Luka:</strong> Flavonoid glikosida dan senyawa fenolik mempercepat regenerasi.</li>" +
+                    "<li><strong>Anti-Inflamasi:</strong> Asam oleat mengurangi peradangan dan risiko penyakit kronis.</li>" +
+                    "<li><strong>Menurunkan Kolesterol:</strong> Membantu mengontrol lipid darah.</li>" +
+                    "<li><strong>Meringankan Diabetes:</strong> Flavonoid stabilkan gula darah.</li>" +
+                    "<li><strong>Meredakan Asma:</strong> Sifat antiasthmatic kurangi gejala pernapasan.</li>" +
+                    "</ul>" +
+                    "<p>Untuk menikmati, seduh 10 kelopak dalam air panas 15 menit, saring, lalu minum. Konsultasikan ke dokter jika memiliki kondisi khusus.</p>"
+                },
+                "manfaat-teh-lavender": {
+                    "title": "Teh Lavender: Ini Manfaatnya bagi Kesehatan",
+                    "date": "17 November 2020",
+                    "image": "images/ad-lavender.png",
+                    "content": "<p>Teh lavender memiliki berbagai manfaat...</p>" +
+                    "<ul>" +
+                    "<li><strong>Stabilkan Mood & Saraf:</strong> Kandungan linalool menenangkan pikiran dan meredakan depresi.</li>" +
+                    "<li><strong>Melancarkan Pencernaan:</strong> Sifat antispasmodik mengurangi kram, mual, dan diare.</li>" +
+                    "<li><strong>Redakan Migrain:</strong> Aroma lavender memberikan efek pereda nyeri kepala.</li>" +
+                    "<li><strong>Perbaiki Tidur:</strong> Menurunkan kortisol, meningkatkan melatonin untuk kualitas tidur lebih baik.</li>" +
+                    "<li><strong>Legakan Pernapasan:</strong> Efek antiinflamasi & antibakteri melegakan saluran napas.</li>" +
+                    "<li><strong>Dukung Imun:</strong> Vitamin C, kalsium, magnesium, dan antioksidan tingkatkan daya tahan tubuh.</li>" +
+                    "<li><strong>Redakan Nyeri Otot & Sendi:</strong> Mengurangi peradangan dan ketegangan otot.</li>" +
+                    "<li><strong>Rawat Kulit:</strong> Antioksidan & antibakteri bantu atasi jerawat dan radikal bebas.</li>" +
+                    "</ul>"
+                },
+                "manfaat-teh-mawar": {
+                    "title": "Kaya Antioksidan, Ini 7 Manfaat Teh Mawar bagi Kesehatan",
+                    "date": "16 April 2025",
+                    "image": "images/ad-mawar.png",
+                    "content": "<p>Teh mawar menawarkan berbagai manfaat...</p>" +
+                    "<ul>" +
+                    "<li><strong>Menyehatkan Pencernaan:</strong> Teh mawar memiliki efek antispasmodik yang meredakan gangguan pencernaan.</li>" +
+                    "<li><strong>Meningkatkan Kesehatan Jantung:</strong> Antioksidan yang ada dalam teh mawar menjaga tekanan darah dan kadar kolesterol.</li>" +
+                    "<li><strong>Mengurangi Stres:</strong> Aromaterapi teh mawar dapat meredakan kecemasan dan stres.</li>" +
+                    "<li><strong>Mendukung Detoksifikasi:</strong> Membantu tubuh membuang racun dan meningkatkan fungsi ginjal.</li>" +
+                    "<li><strong>Perawatan Kulit:</strong> Antioksidan dalam teh mawar mencegah penuaan dini dan jerawat.</li>" +
+                    "<li><strong>Mengatasi Peradangan:</strong> Teh mawar dapat mengurangi radang sendi dan nyeri otot.</li>" +
+                    "<li><strong>Meningkatkan Fungsi Kekebalan Tubuh:</strong> Kaya akan vitamin C, teh mawar dapat meningkatkan sistem kekebalan tubuh.</li>" +
+                    "</ul>"
+                },
+                "bunga-kenanga": {
+                    "title": "Manfaat Bunga Kenanga untuk Kesehatan dan Kecantikan",
+                    "date": "5 Mei 2025",
+                    "image": "images/ad-kenanga.png",
+                    "content": "<p>Bunga kenanga (Cananga odorata) adalah bunga yang dikenal dengan aroma wangi yang khas. Bunga ini tidak hanya memiliki manfaat untuk kesehatan, tetapi juga kecantikan.</p>" +
+                    "<ul>" +
+                    "<li><strong>Relaksasi:</strong> Minyak esensial dari bunga kenanga digunakan untuk mengurangi stres dan meningkatkan kualitas tidur.</li>" +
+                    "<li><strong>Menjaga kesehatan kulit:</strong> Bunga kenanga memiliki sifat antiseptik yang dapat membantu menjaga kebersihan kulit dan mencegah infeksi.</li>" +
+                    "<li><strong>Meningkatkan mood:</strong> Aroma bunga kenanga dipercaya dapat meningkatkan suasana hati dan membantu mengatasi depresi ringan.</li>" +
+                    "<li><strong>Anti-aging:</strong> Kandungan antioksidan dalam bunga kenanga dapat membantu mencegah tanda-tanda penuaan dini pada kulit.</li>" +
+                    "<li><strong>Melawan radikal bebas:</strong> Bunga kenanga membantu melawan kerusakan akibat radikal bebas yang dapat menyebabkan penuaan dan penyakit kulit.</li>" +
+                    "</ul>" +
+                    "<p>Penggunaan bunga kenanga sebagai minyak esensial atau dalam produk kecantikan dapat memberikan banyak manfaat. Namun, pastikan untuk menggunakan produk yang sudah teruji keamanannya.</p>"
+                }
+            };
+
+            return articles[slug];
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Sidebar toggle
+            const hamburger = document.querySelector('.hamburger');
+            const sidebar = document.querySelector('.sidebar');
+            const overlay = document.querySelector('.overlay');
+
+            if (!hamburger || !sidebar || !overlay) {
+                console.error('Elemen tidak ditemukan:', { hamburger, sidebar, overlay });
+                return;
+            }
+
+            hamburger.addEventListener('click', () => {
+                console.log('Hamburger clicked');
+                sidebar.classList.toggle('active');
+                overlay.classList.toggle('active');
+            });
+
+            overlay.addEventListener('click', () => {
+                console.log('Overlay clicked');
+                sidebar.classList.remove('active');
+                overlay.classList.remove('active');
+            });
+
+            // Login popup
+            const loginBtn = document.querySelector('#loginBtn');
+            const sidebarLoginBtn = document.querySelector('#sidebarLoginBtn');
+            const loginPopup = document.querySelector('#loginPopup');
+            const closePopup = document.querySelector('#closePopup');
+
+            [loginBtn, sidebarLoginBtn].forEach(btn => {
+                if (btn) {
+                    btn.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        console.log('Login button clicked:', btn.id);
+                        loginPopup.classList.remove('hidden');
+                    });
+                }
+            });
+
+            if (closePopup) {
+                closePopup.addEventListener('click', () => {
+                    console.log('Close popup clicked');
+                    loginPopup.classList.add('hidden');
+                });
+            }
+
+            // Load article data
+            const slug = getSlugFromURL();
+            if (slug) {
+                const article = getArticleData(slug);
+                if (article) {
+                    document.getElementById("article-title").innerText = article.title;
+                    document.getElementById("article-date").innerText = article.date;
+                    document.getElementById("article-image").alt = article.title;
+                    document.getElementById("article-image").src = article.image;
+                    document.getElementById("article-content").innerHTML = article.content;
+                } else {
+                    document.getElementById("article-title").innerText = "Artikel tidak ditemukan.";
+                    document.getElementById("article-content").innerHTML = "<p>Artikel dengan slug tersebut tidak tersedia.</p>";
+                }
+            }
+        });
+    </script>
+</body>
+</html>

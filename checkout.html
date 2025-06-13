@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout - HerbaBloom</title>
+  <link rel="stylesheet" href="css/main.css">
+  <!-- Font Awesome (sama dengan index.html) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container">
+      <a href="index.html" class="logo">HerbaBloom</a>
+      <button class="hamburger" aria-label="Buka menu">☰</button>
+      <nav class="nav">
+        <a href="index.html">Beranda</a>
+        <a href="products.html">Produk</a>
+        <a href="archive.html">Artikel</a>
+        <a href="cart.html">Keranjang</a>
+        <a href="history.html">Riwayat</a>
+        <a href="#" id="loginBtn" title="Login"><i class="fas fa-sign-in-alt"></i></a>
+      </nav>
+    </div>
+    <nav class="sidebar">
+      <div class="nav">
+        <a href="index.html">Beranda</a>
+        <a href="products.html">Produk</a>
+        <a href="archive.html">Artikel</a>
+        <a href="cart.html">Keranjang</a>
+        <a href="history.html">Riwayat</a>
+        <a href="#" id="sidebarLoginBtn" title="Login"><i class="fas fa-sign-in-alt"></i></a>
+      </div>
+    </nav>
+    <div class="overlay"></div>
+  </header>
+
+  <!-- Checkout Container -->
+  <div class="cart-container">
+    <h2>Ringkasan Pesanan</h2>
+    <table class="cart-table" id="order-summary">
+      <thead>
+        <tr>
+          <th>Produk</th>
+          <th>Harga</th>
+          <th>Jumlah</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tbody id="order-items">
+      </tbody>
+    </table>
+
+    <div class="total-price" id="grand-total">
+      Grand Total: Rp 0
+    </div>
+
+    <h2>Informasi Pengiriman</h2>
+    <div class="shipping-info">
+      <form id="shipping-form">
+        <p><strong>Nama:</strong> <input type="text" id="shipping-name" value="John Doe"></p>
+        <p><strong>Alamat:</strong> <input type="text" id="shipping-address" value="123 Main St, City, Country"></p>
+        <p><strong>Telepon:</strong> <input type="text" id="shipping-phone" value="(123) 456-7890"></p>
+      </form>
+      <button id="save-shipping-info" onclick="saveShippingInfo()">Simpan Perubahan</button>
+    </div>
+
+    <div class="cart-actions">
+      <button onclick="window.location.href='cart.html'">Kembali ke Keranjang</button>
+      <button onclick="confirmOrder()">Konfirmasi Pesanan</button>
+    </div>
+  </div>
+
+  <!-- Popup Login -->
+  <div id="loginPopup" class="popup hidden">
+    <div class="popup-overlay"></div>
+    <div class="popup-content">
+      <span id="closePopup" class="close-btn">×</span>
+      <h2>Login</h2>
+      <form>
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" required>
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" required>
+        <button type="submit" class="btn-login">Masuk</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <p>© 2025 HerbaBloom. Semua hak cipta dilindungi.</p>
+    </div>
+  </footer>
+
+  <!-- JavaScript -->
+  <script src="js/main.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Sidebar toggle
+      const hamburger = document.querySelector('.hamburger');
+      const sidebar = document.querySelector('.sidebar');
+      const overlay = document.querySelector('.overlay');
+
+      if (!hamburger || !sidebar || !overlay) {
+        console.error('Elemen tidak ditemukan:', { hamburger, sidebar, overlay });
+        return;
+      }
+
+      hamburger.addEventListener('click', () => {
+        console.log('Hamburger clicked');
+        sidebar.classList.toggle('active');
+        overlay.classList.toggle('active');
+      });
+
+      overlay.addEventListener('click', () => {
+        console.log('Overlay clicked');
+        sidebar.classList.remove('active');
+        overlay.classList.remove('active');
+      });
+
+      // Login popup
+      const loginBtn = document.querySelector('#loginBtn');
+      const sidebarLoginBtn = document.querySelector('#sidebarLoginBtn');
+      const loginPopup = document.querySelector('#loginPopup');
+      const closePopup = document.querySelector('#closePopup');
+
+      [loginBtn, sidebarLoginBtn].forEach(btn => {
+        if (btn) {
+          btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            console.log('Login button clicked:', btn.id);
+            loginPopup.classList.remove('hidden');
+          });
+        }
+      });
+
+      if (closePopup) {
+        closePopup.addEventListener('click', () => {
+          console.log('Close popup clicked');
+          loginPopup.classList.add('hidden');
+        });
+      }
+
+      // Load order summary
+      const cartItems = getCart();
+      const orderItems = document.getElementById('order-items');
+      const grandTotal = document.getElementById('grand-total');
+
+      if (cartItems.length === 0) {
+        orderItems.innerHTML = '<tr><td colspan="4" class="empty-cart">Tidak ada item untuk checkout.</td></tr>';
+        return;
+      }
+
+      cartItems.forEach(item => {
+        const product = products[item.id];
+        if (product) {
+          const row = document.createElement('tr');
+          row.innerHTML = `
+            <td>${product.name}</td>
+            <td>${formatPrice(product.price)}</td>
+            <td>${item.quantity}</td>
+            <td>${formatPrice(product.price * item.quantity)}</td>
+          `;
+          orderItems.appendChild(row);
+        }
+      });
+
+      const total = calculateTotal();
+      grandTotal.textContent = `Grand Total: ${formatPrice(total)}`;
+    });
+
+    // Save shipping info
+    function saveShippingInfo() {
+      const name = document.getElementById('shipping-name').value;
+      const address = document.getElementById('shipping-address').value;
+      const phone = document.getElementById('shipping-phone').value;
+
+      if (!name || !address || !phone) {
+        alert('Harap lengkapi semua informasi pengiriman.');
+        return;
+      }
+
+      localStorage.setItem('shippingInfo', JSON.stringify({ name, address, phone }));
+      alert('Informasi pengiriman telah disimpan.');
+    }
+
+    // Confirm order
+    function confirmOrder() {
+      const name = document.getElementById('shipping-name').value;
+      const address = document.getElementById('shipping-address').value;
+      const phone = document.getElementById('shipping-phone').value;
+
+      if (!name || !address || !phone) {
+        alert('Harap lengkapi informasi pengiriman sebelum konfirmasi pesanan.');
+        return;
+      }
+
+      const cartItems = getCart();
+      const total = calculateTotal();
+
+      if (cartItems.length === 0) {
+        alert('Keranjang Anda kosong. Tambahkan produk terlebih dahulu.');
+        return;
+      }
+
+      // Save checkout data to localStorage
+      const checkoutData = {
+        date: new Date().toISOString(),
+        shipping: { name, address, phone },
+        items: cartItems,
+        total: total
+      };
+
+      const existing = JSON.parse(localStorage.getItem('checkoutHistory') || '[]');
+      existing.push(checkoutData);
+      localStorage.setItem('checkoutHistory', JSON.stringify(existing));
+
+      alert('Pesanan Anda telah berhasil ditempatkan!');
+
+      // Clear cart and redirect
+      setTimeout(() => {
+        clearCart();
+        window.location.href = 'index.html';
+      }, 100);
+    }
+  </script>
+  
+  <script src="js/role-guard.js"></script>
+</body>
+</html>

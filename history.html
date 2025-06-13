@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Riwayat Transaksi - HerbaBloom</title>
+  <link rel="stylesheet" href="css/main.css">
+  <!-- Font Awesome (sama dengan index.html) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container">
+      <a href="index.html" class="logo">HerbaBloom</a>
+      <button class="hamburger" aria-label="Buka menu">☰</button>
+      <nav class="nav">
+        <a href="index.html">Beranda</a>
+        <a href="products.html">Produk</a>
+        <a href="archive.html">Artikel</a>
+        <a href="cart.html">Keranjang</a>
+        <a href="history.html">Riwayat</a>
+        <a href="#" id="loginBtn" title="Login"><i class="fas fa-sign-in-alt"></i></a>
+      </nav>
+    </div>
+    <nav class="sidebar">
+      <div class="nav">
+        <a href="index.html">Beranda</a>
+        <a href="products.html">Produk</a>
+        <a href="archive.html">Artikel</a>
+        <a href="cart.html">Keranjang</a>
+        <a href="history.html">Riwayat</a>
+        <a href="#" id="sidebarLoginBtn" title="Login"><i class="fas fa-sign-in-alt"></i></a>
+      </div>
+    </nav>
+    <div class="overlay"></div>
+  </header>
+
+  <!-- History Container -->
+  <div class="history-container">
+    <h2>Riwayat Checkout Anda</h2>
+    <table class="history-table" id="history-table">
+      <thead>
+        <tr>
+          <th>ID Transaksi</th>
+          <th>Tanggal</th>
+          <th>Nama</th>
+          <th>Alamat</th>
+          <th>Telepon</th>
+          <th>Produk</th>
+          <th>Total Pembelian</th>
+          <th>Aksi</th>
+        </tr>
+      </thead>
+      <tbody id="transaction-history">
+        <!-- Riwayat transaksi akan ditampilkan di sini -->
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Popup Login -->
+  <div id="loginPopup" class="popup hidden">
+    <div class="popup-overlay"></div>
+    <div class="popup-content">
+      <span id="closePopup" class="close-btn">×</span>
+      <h2>Login</h2>
+      <form>
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" required>
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" required>
+        <button type="submit" class="btn-login">Masuk</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <p>© 2025 HerbaBloom. Semua hak cipta dilindungi.</p>
+    </div>
+  </footer>
+
+  <!-- JavaScript -->
+  <script src="js/main.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Sidebar toggle
+      const hamburger = document.querySelector('.hamburger');
+      const sidebar = document.querySelector('.sidebar');
+      const overlay = document.querySelector('.overlay');
+
+      if (!hamburger || !sidebar || !overlay) {
+        console.error('Elemen tidak ditemukan:', { hamburger, sidebar, overlay });
+        return;
+      }
+
+      hamburger.addEventListener('click', () => {
+        console.log('Hamburger clicked');
+        sidebar.classList.toggle('active');
+        overlay.classList.toggle('active');
+      });
+
+      overlay.addEventListener('click', () => {
+        console.log('Overlay clicked');
+        sidebar.classList.remove('active');
+        overlay.classList.remove('active');
+      });
+
+      // Login popup
+      const loginBtn = document.querySelector('#loginBtn');
+      const sidebarLoginBtn = document.querySelector('#sidebarLoginBtn');
+      const loginPopup = document.querySelector('#loginPopup');
+      const closePopup = document.querySelector('#closePopup');
+
+      [loginBtn, sidebarLoginBtn].forEach(btn => {
+        if (btn) {
+          btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            console.log('Login button clicked:', btn.id);
+            loginPopup.classList.remove('hidden');
+          });
+        }
+      });
+
+      if (closePopup) {
+        closePopup.addEventListener('click', () => {
+          console.log('Close popup clicked');
+          loginPopup.classList.add('hidden');
+        });
+      }
+
+      // Load transaction history
+      const historyTable = document.getElementById('transaction-history');
+      let history = JSON.parse(localStorage.getItem('checkoutHistory') || '[]');
+
+      function renderTable() {
+        historyTable.innerHTML = '';
+
+        if (history.length === 0) {
+          historyTable.innerHTML = '<tr><td colspan="8">Belum ada transaksi.</td></tr>';
+          return;
+        }
+
+        history.forEach((entry, index) => {
+          const productList = entry.items.map(item => {
+            const product = products[item.id];
+            return `${product ? product.name : 'Produk tidak ditemukan'} (${item.quantity})`;
+          }).join('<br>');
+
+          const row = document.createElement('tr');
+          row.innerHTML = `
+            <td>TX${String(index + 1).padStart(4, '0')}</td>
+            <td>${new Date(entry.date).toLocaleString('id-ID')}</td>
+            <td>${entry.shipping.name}</td>
+            <td>${entry.shipping.address}</td>
+            <td>${entry.shipping.phone}</td>
+            <td>${productList}</td>
+            <td>${formatPrice(entry.total)}</td>
+            <td><button class="delete-btn" data-index="${index}">Hapus</button></td>
+          `;
+          historyTable.appendChild(row);
+        });
+
+        // Add event listeners to delete buttons
+        document.querySelectorAll('.delete-btn').forEach(button => {
+          button.addEventListener('click', (e) => {
+            const index = e.target.getAttribute('data-index');
+            history.splice(index, 1); // Remove from array
+            localStorage.setItem('checkoutHistory', JSON.stringify(history));
+            renderTable(); // Refresh table
+          });
+        });
+      }
+
+      renderTable();
+    });
+  </script>
+
+  <script src="js/role-guard.js"></script>
+</body>
+</html>

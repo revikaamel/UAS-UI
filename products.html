@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Katalog Produk - HerbaBloom</title>
+    <link rel="stylesheet" href="css/main.css">
+    <!-- Font Awesome (sama dengan index.html) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="site-header">
+        <div class="container">
+            <a href="index.html" class="logo">HerbaBloom</a>
+            <button class="hamburger" aria-label="Buka menu">☰</button>
+            <nav class="nav">
+                <a href="index.html">Beranda</a>
+                <a href="products.html">Produk</a>
+                <a href="archive.html">Artikel</a>
+                <a href="cart.html">Keranjang</a>
+                <a href="history.html">Riwayat</a>
+                <a href="#" id="loginBtn" title="Login"><i class="fas fa-sign-in-alt"></i></a>
+            </nav>
+        </div>
+        <nav class="sidebar">
+            <div class="nav">
+                <a href="index.html">Beranda</a>
+                <a href="products.html">Produk</a>
+                <a href="archive.html">Artikel</a>
+                <a href="cart.html">Keranjang</a>
+                <a href="history.html">Riwayat</a>
+                <a href="#" id="sidebarLoginBtn" title="Login"><i class="fas fa-sign-in-alt"></i></a>
+            </div>
+        </nav>
+        <div class="overlay"></div>
+    </header>
+
+    <!-- Katalog Produk -->
+    <section class="product-grid">
+        <div class="product-card">
+            <a href="product-detail.html?id=rosella">
+                <span class="discount-badge">70%</span>
+                <span class="heart-icon">♥</span>
+                <img src="images/produk-rosella.png" alt="Teh Rosella">
+                <h3>Teh Rosella</h3>
+                <div class="description">Teh herbal alami dengan cita rasa segar</div>
+                <div class="price-container">
+                    <span class="original-price">Rp 83.333</span>
+                    <span class="discounted-price">Rp 25.000</span>
+                </div>
+                <div class="rating">
+                    <span>★ 4.6</span>
+                    <span class="reviews">(1.2K)</span>
+                </div>
+            </a>
+        </div>
+
+        <div class="product-card">
+            <a href="product-detail.html?id=chamomile">
+                <span class="discount-badge">70%</span>
+                <span class="heart-icon">♥</span>
+                <img src="images/produk-chamomile.png" alt="Teh Chamomile">
+                <h3>Teh Chamomile</h3>
+                <div class="description">Teh herbal yang menenangkan</div>
+                <div class="price-container">
+                    <span class="original-price">Rp 93.333</span>
+                    <span class="discounted-price">Rp 28.000</span>
+                </div>
+                <div class="rating">
+                    <span>★ 4.5</span>
+                    <span class="reviews">(900)</span>
+                </div>
+            </a>
+        </div>
+
+        <div class="product-card">
+            <a href="product-detail.html?id=telang">
+                <span class="discount-badge">70%</span>
+                <span class="heart-icon">♥</span>
+                <img src="images/produk-telang.png" alt="Teh Bunga Telang">
+                <h3>Teh Bunga Telang</h3>
+                <div class="description">Teh dengan warna biru alami</div>
+                <div class="price-container">
+                    <span class="original-price">Rp 73.333</span>
+                    <span class="discounted-price">Rp 22.000</span>
+                </div>
+                <div class="rating">
+                    <span>★ 4.7</span>
+                    <span class="reviews">(1.5K)</span>
+                </div>
+            </a>
+        </div>
+
+        <div class="product-card">
+            <a href="product-detail.html?id=lavender">
+                <span class="discount-badge">70%</span>
+                <span class="heart-icon">♥</span>
+                <img src="images/produk-lavender.png" alt="Teh Lavender">
+                <h3>Teh Lavender</h3>
+                <div class="description">Teh dengan aroma bunga lavender</div>
+                <div class="price-container">
+                    <span class="original-price">Rp 100.000</span>
+                    <span class="discounted-price">Rp 30.000</span>
+                </div>
+                <div class="rating">
+                    <span>★ 4.4</span>
+                    <span class="reviews">(800)</span>
+                </div>
+            </a>
+        </div>
+
+        <div class="product-card">
+            <a href="product-detail.html?id=mawar">
+                <span class="discount-badge">70%</span>
+                <span class="heart-icon">♥</span>
+                <img src="images/produk-mawar.png" alt="Teh Mawar">
+                <h3>Teh Mawar</h3>
+                <div class="description">Teh dengan aroma mawar segar</div>
+                <div class="price-container">
+                    <span class="original-price">Rp 90.000</span>
+                    <span class="discounted-price">Rp 27.000</span>
+                </div>
+                <div class="rating">
+                    <span>★ 4.6</span>
+                    <span class="reviews">(1.1K)</span>
+                </div>
+            </a>
+        </div>
+
+        <div class="product-card">
+            <a href="product-detail.html?id=krisan">
+                <span class="discount-badge">70%</span>
+                <span class="heart-icon">♥</span>
+                <img src="images/produk-krisan.png" alt="Teh Krisan">
+                <h3>Teh Krisan</h3>
+                <div class="description">Teh dengan rasa lembut dan manis</div>
+                <div class="price-container">
+                    <span class="original-price">Rp 80.000</span>
+                    <span class="discounted-price">Rp 24.000</span>
+                </div>
+                <div class="rating">
+                    <span>★ 4.3</span>
+                    <span class="reviews">(700)</span>
+                </div>
+            </a>
+        </div>
+
+        <div class="product-card">
+            <a href="product-detail.html?id=blimbingwuluh">
+                <span class="discount-badge">70%</span>
+                <span class="heart-icon">♥</span>
+                <img src="images/produk-bunga blimbing wuluh.png" alt="Teh Bunga Blimbing Wuluh">
+                <h3>Teh Bunga Blimbing Wuluh</h3>
+                <div class="description">Teh dengan rasa asam segar</div>
+                <div class="price-container">
+                    <span class="original-price">Rp 76.667</span>
+                    <span class="discounted-price">Rp 23.000</span>
+                </div>
+                <div class="rating">
+                    <span>★ 4.5</span>
+                    <span class="reviews">(950)</span>
+                </div>
+            </a>
+        </div>
+
+        <div class="product-card">
+            <a href="product-detail.html?id=melati">
+                <span class="discount-badge">70%</span>
+                <span class="heart-icon">♥</span>
+                <img src="images/produk-melati.png" alt="Teh Melati">
+                <h3>Teh Melati</h3>
+                <div class="description">Teh dengan aroma melati klasik</div>
+                <div class="price-container">
+                    <span class="original-price">Rp 86.667</span>
+                    <span class="discounted-price">Rp 26.000</span>
+                </div>
+                <div class="rating">
+                    <span>★ 4.8</span>
+                    <span class="reviews">(2K)</span>
+                </div>
+            </a>
+        </div>
+
+        <div class="product-card">
+            <a href="product-detail.html?id=hibiscus">
+                <span class="discount-badge">70%</span>
+                <span class="heart-icon">♥</span>
+                <img src="images/produk-hibiscus.png" alt="Teh Bunga Sepatu">
+                <h3>Teh Bunga Sepatu</h3>
+                <div class="description">Teh dengan rasa asam manis</div>
+                <div class="price-container">
+                    <span class="original-price">Rp 83.333</span>
+                    <span class="discounted-price">Rp 25.000</span>
+                </div>
+                <div class="rating">
+                    <span>★ 4.6</span>
+                    <span class="reviews">(1.3K)</span>
+                </div>
+            </a>
+        </div>
+
+        <div class="product-card">
+            <a href="product-detail.html?id=dandelion">
+                <span class="discount-badge">70%</span>
+                <span class="heart-icon">♥</span>
+                <img src="images/produk-dandelion.png" alt="Teh Dandelion">
+                <h3>Teh Dandelion</h3>
+                <div class="description">Teh herbal untuk detoksifikasi</div>
+                <div class="price-container">
+                    <span class="original-price">Rp 96.667</span>
+                    <span class="discounted-price">Rp 29.000</span>
+                </div>
+                <div class="rating">
+                    <span>★ 4.4</span>
+                    <span class="reviews">(850)</span>
+                </div>
+            </a>
+        </div>
+
+        <div class="product-card">
+            <a href="product-detail.html?id=sakura">
+                <span class="discount-badge">70%</span>
+                <span class="heart-icon">♥</span>
+                <img src="images/produk-sakura.png" alt="Teh Sakura">
+                <h3>Teh Sakura</h3>
+                <div class="description">Teh dengan aroma bunga sakura</div>
+                <div class="price-container">
+                    <span class="original-price">Rp 103.333</span>
+                    <span class="discounted-price">Rp 31.000</span>
+                </div>
+                <div class="rating">
+                    <span>★ 4.7</span>
+                    <span class="reviews">(1.4K)</span>
+                </div>
+            </a>
+        </div>
+
+        <div class="product-card">
+            <a href="product-detail.html?id=mekarchina">
+                <span class="discount-badge">70%</span>
+                <span class="heart-icon">♥</span>
+                <img src="images/produk-mekar-china.png" alt="Teh Mekar China">
+                <h3>Teh Mekar China</h3>
+                <div class="description">Teh dengan visual mekar yang indah</div>
+                <div class="price-container">
+                    <span class="original-price">Rp 110.000</span>
+                    <span class="discounted-price">Rp 33.000</span>
+                </div>
+                <div class="rating">
+                    <span>★ 4.9</span>
+                    <span class="reviews">(2.5K)</span>
+                </div>
+            </a>
+        </div>
+
+        <div class="product-card">
+            <a href="product-detail.html?id=peony">
+                <span class="discount-badge">70%</span>
+                <span class="heart-icon">♥</span>
+                <img src="images/produk-peony.png" alt="Teh Peony">
+                <h3>Teh Peony</h3>
+                <div class="description">Teh dengan aroma bunga peony</div>
+                <div class="price-container">
+                    <span class="original-price">Rp 86.667</span>
+                    <span class="discounted-price">Rp 26.000</span>
+                </div>
+                <div class="rating">
+                    <span>★ 4.5</span>
+                    <span class="reviews">(1K)</span>
+                </div>
+            </a>
+        </div>
+
+        <div class="product-card">
+            <a href="product-detail.html?id=lotus">
+                <span class="discount-badge">70%</span>
+                <span class="heart-icon">♥</span>
+                <img src="images/produk-lotus.png" alt="Teh Lotus">
+                <h3>Teh Lotus</h3>
+                <div class="description">Teh dengan aroma bunga lotus</div>
+                <div class="price-container">
+                    <span class="original-price">Rp 100.000</span>
+                    <span class="discounted-price">Rp 30.000</span>
+                </div>
+                <div class="rating">
+                    <span>★ 4.6</span>
+                    <span class="reviews">(1.2K)</span>
+                </div>
+            </a>
+        </div>
+
+        <div class="product-card">
+            <a href="product-detail.html?id=lily">
+                <span class="discount-badge">70%</span>
+                <span class="heart-icon">♥</span>
+                <img src="images/produk-lily.png" alt="Teh Lily">
+                <h3>Teh Lily</h3>
+                <div class="description">Teh dengan aroma bunga lily</div>
+                <div class="price-container">
+                    <span class="original-price">Rp 93.333</span>
+                    <span class="discounted-price">Rp 28.000</span>
+                </div>
+                <div class="rating">
+                    <span>★ 4.5</span>
+                    <span class="reviews">(950)</span>
+                </div>
+            </a>
+        </div>
+    </section>
+
+    <!-- Popup Login -->
+    <div id="loginPopup" class="popup hidden">
+        <div class="popup-overlay"></div>
+        <div class="popup-content">
+            <span id="closePopup" class="close-btn">×</span>
+            <h2>Login</h2>
+            <form>
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required>
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+                <button type="submit" class="btn-login">Masuk</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="container">
+            <p>© 2025 HerbaBloom. Semua hak cipta dilindungi.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Sidebar toggle
+            const hamburger = document.querySelector('.hamburger');
+            const sidebar = document.querySelector('.sidebar');
+            const overlay = document.querySelector('.overlay');
+
+            if (!hamburger || !sidebar || !overlay) {
+                console.error('Elemen tidak ditemukan:', { hamburger, sidebar, overlay });
+                return;
+            }
+
+            hamburger.addEventListener('click', () => {
+                console.log('Hamburger clicked');
+                sidebar.classList.toggle('active');
+                overlay.classList.toggle('active');
+            });
+
+            overlay.addEventListener('click', () => {
+                console.log('Overlay clicked');
+                sidebar.classList.remove('active');
+                overlay.classList.remove('active');
+            });
+
+            // Login popup
+            const loginBtn = document.querySelector('#loginBtn');
+            const sidebarLoginBtn = document.querySelector('#sidebarLoginBtn');
+            const loginPopup = document.querySelector('#loginPopup');
+            const closePopup = document.querySelector('#closePopup');
+
+            [loginBtn, sidebarLoginBtn].forEach(btn => {
+                if (btn) {
+                    btn.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        console.log('Login button clicked:', btn.id);
+                        loginPopup.classList.remove('hidden');
+                    });
+                }
+            });
+
+            if (closePopup) {
+                closePopup.addEventListener('click', () => {
+                    console.log('Close popup clicked');
+                    loginPopup.classList.add('hidden');
+                });
+            }
+        });
+    </script>
+    <script src="js/role-guard.js"></script>
+</body>
+</html>

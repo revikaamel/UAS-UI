@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Keranjang - HerbaBloom</title>
+  <link rel="stylesheet" href="css/main.css">
+  <!-- Font Awesome (sama dengan index.html) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container">
+      <a href="index.html" class="logo">HerbaBloom</a>
+      <button class="hamburger" aria-label="Buka menu">☰</button>
+      <nav class="nav">
+        <a href="index.html">Beranda</a>
+        <a href="products.html">Produk</a>
+        <a href="archive.html">Artikel</a>
+        <a href="cart.html">Keranjang</a>
+        <a href="history.html">Riwayat</a>
+        <a href="#" id="loginBtn" title="Login"><i class="fas fa-sign-in-alt"></i></a>
+      </nav>
+    </div>
+    <nav class="sidebar">
+      <div class="nav">
+        <a href="index.html">Beranda</a>
+        <a href="products.html">Produk</a>
+        <a href="archive.html">Artikel</a>
+        <a href="cart.html">Keranjang</a>
+        <a href="history.html">Riwayat</a>
+        <a href="#" id="sidebarLoginBtn" title="Login"><i class="fas fa-sign-in-alt"></i></a>
+      </div>
+    </nav>
+    <div class="overlay"></div>
+  </header>
+
+  <!-- Cart Container -->
+  <div class="cart-container" id="cart-container">
+    <table class="cart-table" id="cart-table">
+      <thead>
+        <tr>
+          <th>Produk</th>
+          <th>Harga</th>
+          <th>Jumlah</th>
+          <th>Total</th>
+          <th>Aksi</th>
+        </tr>
+      </thead>
+      <tbody id="cart-items">
+      </tbody>
+    </table>
+
+    <div class="total-price" id="total-price">
+      Total: Rp 0
+    </div>
+
+    <div class="cart-actions">
+      <button onclick="window.location.href='products.html'">Lanjutkan Belanja</button>
+      <button id="checkout-button" onclick="window.location.href='checkout.html'" disabled>Proceed to Checkout</button>
+    </div>
+  </div>
+
+  <!-- Popup Login -->
+  <div id="loginPopup" class="popup hidden">
+    <div class="popup-overlay"></div>
+    <div class="popup-content">
+      <span id="closePopup" class="close-btn">×</span>
+      <h2>Login</h2>
+      <form>
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" required>
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" required>
+        <button type="submit" class="btn-login">Masuk</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <p>© 2025 HerbaBloom. Semua hak cipta dilindungi.</p>
+    </div>
+  </footer>
+
+  <!-- JavaScript -->
+  <script src="js/main.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Sidebar toggle
+      const hamburger = document.querySelector('.hamburger');
+      const sidebar = document.querySelector('.sidebar');
+      const overlay = document.querySelector('.overlay');
+
+      if (!hamburger || !sidebar || !overlay) {
+        console.error('Elemen tidak ditemukan:', { hamburger, sidebar, overlay });
+        return;
+      }
+
+      hamburger.addEventListener('click', () => {
+        console.log('Hamburger clicked');
+        sidebar.classList.toggle('active');
+        overlay.classList.toggle('active');
+      });
+
+      overlay.addEventListener('click', () => {
+        console.log('Overlay clicked');
+        sidebar.classList.remove('active');
+        overlay.classList.remove('active');
+      });
+
+      // Login popup
+      const loginBtn = document.querySelector('#loginBtn');
+      const sidebarLoginBtn = document.querySelector('#sidebarLoginBtn');
+      const loginPopup = document.querySelector('#loginPopup');
+      const closePopup = document.querySelector('#closePopup');
+
+      [loginBtn, sidebarLoginBtn].forEach(btn => {
+        if (btn) {
+          btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            console.log('Login button clicked:', btn.id);
+            loginPopup.classList.remove('hidden');
+          });
+        }
+      });
+
+      if (closePopup) {
+        closePopup.addEventListener('click', () => {
+          console.log('Close popup clicked');
+          loginPopup.classList.add('hidden');
+        });
+      }
+
+      // Load cart items
+      const cartItems = getCart();
+      const cartTableBody = document.getElementById('cart-items');
+      const totalPriceElement = document.getElementById('total-price');
+      const checkoutButton = document.getElementById('checkout-button');
+
+      if (cartItems.length === 0) {
+        cartTableBody.innerHTML = '<tr><td colspan="5" class="empty-cart">Keranjang Anda kosong.</td></tr>';
+        return;
+      }
+
+      cartItems.forEach(item => {
+        const product = products[item.id];
+        if (product) {
+          const row = document.createElement('tr');
+          row.innerHTML = `
+            <td>
+              <img src="${product.image}" alt="${product.name}" style="width: 50px;"> ${product.name}
+            </td>
+            <td>${formatPrice(product.price)}</td>
+            <td>
+              <div class="quantity-controls">
+                <button onclick="updateCartQuantity('${item.id}', ${item.quantity - 1})">-</button>
+                <input type="number" value="${item.quantity}" min="1" onchange="updateCartQuantity('${item.id}', parseInt(this.value))">
+                <button onclick="updateCartQuantity('${item.id}', ${item.quantity + 1})">+</button>
+              </div>
+            </td>
+            <td>${formatPrice(product.price * item.quantity)}</td>
+            <td><button class="remove-button" onclick="removeFromCart('${item.id}')">Hapus</button></td>
+          `;
+          cartTableBody.appendChild(row);
+        }
+      });
+
+      const total = calculateTotal();
+      totalPriceElement.textContent = `Total: ${formatPrice(total)}`;
+      checkoutButton.disabled = total === 0;
+    });
+  </script>
+  
+  <script src="js/role-guard.js"></script>
+</body>
+</html>

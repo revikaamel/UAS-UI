@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Manage Transactions</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="../css/mtransaksi.css" />
+</head>
+<body>
+  <div class="dashboard-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <a href="dashboard.html" class="back-btn">
+        <i class="fas fa-arrow-left"></i>
+      </a>
+      <h2>HerbaBloom</h2>
+      <nav>
+        <ul>
+          <li><a href="manage-articles.html">Manage Articles</a></li>
+          <li><a href="manage-products.html">Manage Products</a></li>
+          <li><a href="manage-transactions.html" class="active">Manage Transactions</a></li>
+          <li><a href="manage-users.html">Manage Users</a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="main-section">
+      <header class="main-header">
+        <button class="hamburger" aria-label="Buka menu"><i class="fas fa-bars"></i></button>
+        <h1>Manage Transactions</h1>
+        <button onclick="logout()">Logout</button>
+      </header>
+
+      <section class="table-section">
+        <div class="table-wrapper">
+          <table id="transactions-table">
+            <thead>
+              <tr>
+                <th>Id Transaksi</th>
+                <th>Tanggal & Waktu</th>
+                <th>Nama</th>
+                <th>Alamat</th>
+                <th>Telepon</th>
+                <th>Produk (Jumlah)</th>
+                <th>Total Pembelian</th>
+                <th>Aksi</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Data injected by JS -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <footer class="footer">
+        <p>© 2025 HerbaBloom. All rights reserved.</p>
+      </footer>
+    </div>
+
+    <!-- Overlay untuk sidebar -->
+    <div class="overlay"></div>
+
+    <!-- Modal Edit -->
+    <div id="editModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background-color:rgba(0,0,0,0.5);">
+      <div style="background:white; width:400px; margin:100px auto; padding:20px; border-radius:10px;">
+        <h3>Edit Transaksi</h3>
+        <form id="editForm">
+          <input type="hidden" id="edit-id">
+          <label>Nama:</label><br>
+          <input type="text" id="edit-name" required><br><br>
+          <label>Alamat:</label><br>
+          <input type="text" id="edit-address" required><br><br>
+          <label>Telepon:</label><br>
+          <input type="text" id="edit-phone" required><br><br>
+          <label>Produk (dengan jumlah):</label><br>
+          <input type="text" id="edit-product" required><br><br>
+          <label>Total Pembelian:</label><br>
+          <input type="text" id="edit-total" required><br><br>
+          <button type="submit">Simpan</button>
+          <button type="button" onclick="closeModal()">Batal</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function logout() {
+      window.location.href = "../index.html";
+    }
+
+    // JavaScript untuk hamburger menu
+    document.addEventListener('DOMContentLoaded', () => {
+      const hamburger = document.querySelector('.hamburger');
+      const sidebar = document.querySelector('.sidebar');
+      const overlay = document.querySelector('.overlay');
+
+      if (!hamburger || !sidebar || !overlay) {
+        console.error('Elemen tidak ditemukan:', { hamburger, sidebar, overlay });
+        return;
+      }
+
+      hamburger.addEventListener('click', () => {
+        sidebar.classList.toggle('active');
+        overlay.classList.toggle('active');
+      });
+
+      overlay.addEventListener('click', () => {
+        sidebar.classList.remove('active');
+        overlay.classList.remove('active');
+      });
+    });
+
+    // Fungsi untuk modal (contoh sederhana)
+    function openModal(id, name, address, phone, product, total) {
+      document.getElementById('edit-id').value = id;
+      document.getElementById('edit-name').value = name;
+      document.getElementById('edit-address').value = address;
+      document.getElementById('edit-phone').value = phone;
+      document.getElementById('edit-product').value = product;
+      document.getElementById('edit-total').value = total;
+      document.getElementById('editModal').style.display = 'block';
+    }
+
+    function closeModal() {
+      document.getElementById('editModal').style.display = 'none';
+    }
+  </script>
+  <script src="../js/mtransaksi.js"></script>
+</body>
+</html>

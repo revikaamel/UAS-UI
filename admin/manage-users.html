@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Manage Users</title>
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+  />
+  <link rel="stylesheet" href="../css/musers.css" />
+</head>
+<body>
+  <div class="dashboard-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <a href="dashboard.html" class="back-btn">
+        <i class="fas fa-arrow-left"></i>
+      </a>
+      <h2>HerbaBloom</h2>
+      <nav>
+        <ul>
+          <li><a href="manage-articles.html">Manage Articles</a></li>
+          <li><a href="manage-products.html">Manage Products</a></li>
+          <li><a href="manage-transactions.html">Manage Transactions</a></li>
+          <li><a href="manage-users.html" class="active">Manage Users</a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="main-section">
+      <header class="main-header">
+        <button class="hamburger" aria-label="Buka menu"><i class="fas fa-bars"></i></button>
+        <h1>Manage Users</h1>
+        <button onclick="logout()">Logout</button>
+      </header>
+
+      <section class="table-section">
+        <div class="table-wrapper">
+          <table id="users-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Nama</th>
+                <th>Password</th>
+                <th>Aksi</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Data injected by JS -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <footer class="footer">
+        <p>© 2025 HerbaBloom. All rights reserved.</p>
+      </footer>
+    </div>
+
+    <!-- Overlay untuk sidebar -->
+    <div class="overlay"></div>
+
+    <!-- Modal Edit User -->
+    <div id="editUserModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background-color:rgba(0,0,0,0.5);">
+      <div style="background:white; width:350px; margin:100px auto; padding:20px; border-radius:8px; position: relative;">
+        <h3>Edit User</h3>
+        <form id="editUserForm">
+          <input type="hidden" id="edit-user-id" />
+          <label>Nama:</label><br/>
+          <input type="text" id="edit-user-name" required /><br/><br/>
+          <label>Password Baru:</label><br/>
+          <input type="password" id="edit-user-password" placeholder="Isi jika ingin ganti password" /><br/><br/>
+          <button type="submit">Simpan</button>
+          <button type="button" onclick="closeEditUserModal()">Batal</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function logout() {
+      window.location.href = "../index.html";
+    }
+
+    // JavaScript untuk hamburger menu
+    document.addEventListener('DOMContentLoaded', () => {
+      const hamburger = document.querySelector('.hamburger');
+      const sidebar = document.querySelector('.sidebar');
+      const overlay = document.querySelector('.overlay');
+
+      if (!hamburger || !sidebar || !overlay) {
+        console.error('Elemen tidak ditemukan:', { hamburger, sidebar, overlay });
+        return;
+      }
+
+      hamburger.addEventListener('click', () => {
+        sidebar.classList.toggle('active');
+        overlay.classList.toggle('active');
+      });
+
+      overlay.addEventListener('click', () => {
+        sidebar.classList.remove('active');
+        overlay.classList.remove('active');
+      });
+    });
+
+    // Fungsi untuk modal (contoh sederhana)
+    function openEditUserModal(id, name, password) {
+      document.getElementById('edit-user-id').value = id;
+      document.getElementById('edit-user-name').value = name;
+      document.getElementById('edit-user-password').value = password || '';
+      document.getElementById('editUserModal').style.display = 'block';
+    }
+
+    function closeEditUserModal() {
+      document.getElementById('editUserModal').style.display = 'none';
+    }
+  </script>
+  <script src="../js/musers.js"></script>
+</body>
+</html>
